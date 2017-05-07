@@ -214,6 +214,7 @@ describe User, focus: true do
           create_friendship(user, friend)
           user.block_friend(friend)
           expect(find_friendship_record(user, friend).blocker_id).to eq user.id
+          expect(find_friendship_record(friend, user).blocker_id).to eq user.id
         end
       end
     end
@@ -272,30 +273,5 @@ describe User, focus: true do
         end
       end
     end
-
-    describe '#on_friendship_accepted' do
-      context 'when friendship is accepted' do
-        it 'should be called' do
-          user.friend_request(friend)
-          friendship = find_friendship_record(user, friend)
-
-          expect(friendship.friendable).to receive(:on_friendship_accepted)
-          friendship.accept!
-        end
-      end
-    end
-
-    describe '#on_friendship_blocked' do
-      context 'when friendship is blocked' do
-        it 'should be called' do
-          user.friend_request(friend)
-          friendship = find_friendship_record(user, friend)
-
-          expect(friendship.friendable).to receive(:on_friendship_blocked)
-          friendship.block!
-        end
-      end
-    end
-
   end
 end
