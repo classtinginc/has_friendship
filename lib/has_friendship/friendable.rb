@@ -58,7 +58,7 @@ module HasFriendship
 
       def decline_request(friend)
         on_relation_with(friend) do |one, other|
-          HasFriendship::Friendship.find_unblocked_friendship(one, other).destroy
+          HasFriendship::Friendship.find_one_side(one, other).destroy
         end
       end
 
